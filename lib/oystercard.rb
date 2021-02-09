@@ -1,7 +1,10 @@
-LIMIT = 90
+
 
 class Oystercard
   attr_reader :balance, :limit, :in_use
+  LIMIT = 90
+  Min_Balance = 1
+
 
   def initialize
     @balance = 0
@@ -21,10 +24,14 @@ class Oystercard
   def in_journey?
     @in_use
   end
+
   def tap_in
+    fail "Mininum balance of #{Min_Balance} required to travel" if @balance < Min_Balance
     @in_use = true
   end
+
   def tap_out
     @in_use = false
   end
+
 end
