@@ -3,7 +3,7 @@
 class Oystercard
   attr_reader :balance, :limit, :in_use
   LIMIT = 90
-  Min_Balance = 1
+  MIN_BALANCE = 1
 
 
   def initialize
@@ -13,7 +13,7 @@ class Oystercard
   end
   def top_up(value)
     projection = @balance + value
-    raise "Top-up limit of £#{LIMIT} exceeded" if projection > @limit
+    fail "Top-up limit of £#{@limit} exceeded" if projection > @limit
     @balance += value
   end
 
@@ -26,7 +26,7 @@ class Oystercard
   end
 
   def tap_in
-    fail "Mininum balance of #{Min_Balance} required to travel" if @balance < Min_Balance
+    fail "Mininum balance of £#{MIN_BALANCE} required to travel" if @balance < MIN_BALANCE
     @in_use = true
   end
 

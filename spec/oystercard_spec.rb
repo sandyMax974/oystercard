@@ -19,7 +19,7 @@ describe Oystercard do
     it 'should raise an error if top_up returns more than 90' do
       oyster = Oystercard.new
       oyster.top_up(Oystercard::LIMIT)
-      expect { subject.top_up(1) }.to raise_error("top up limit of #{Oystercard::LIMIT} exceeded")
+      expect { oyster.top_up(1) }.to raise_error "Top-up limit of £#{Oystercard::LIMIT} exceeded"
     end
   end
 
@@ -44,7 +44,7 @@ describe Oystercard do
       expect{subject.tap_in}.to change{subject.in_journey?}.to true
     end
     it 'should fail if balance is less than 1' do
-      expect { subject.tap_in }.to raise_error "Mininum balance of #{Oystercard::Min_Balance} required to travel"
+      expect { subject.tap_in }.to raise_error "Mininum balance of £#{Oystercard::MIN_BALANCE} required to travel"
     end
   end
 
