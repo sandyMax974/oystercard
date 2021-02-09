@@ -42,4 +42,11 @@ describe Oystercard do
     end
   end
 
+  describe '#tap_out' do
+    it 'should change in_journey? to false' do
+      subject.tap_in
+      expect { subject.tap_out }.to change { subject.in_journey? }.to false
+    end
+  end
+
 end

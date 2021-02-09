@@ -17,11 +17,14 @@ class Oystercard
   def deduct(value)
     @balance -= value
   end
+  #is it necessary to use both in_journey and in_use (they are both booleans showing the same thing)
   def in_journey?
     @in_use
   end
   def tap_in
     @in_use = true
   end
-
+  def tap_out
+    @in_use = false
+  end
 end
