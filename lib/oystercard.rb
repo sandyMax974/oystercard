@@ -12,4 +12,9 @@ class Oystercard
     raise "top up limit of #{LIMIT} exceeded" if projection > @limit
     @balance += value
   end
+
+  def deduct(value)
+    @balance -= value
+  end
+
 end
