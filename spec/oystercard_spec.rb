@@ -7,6 +7,9 @@ describe Oystercard do
   it 'has a limit' do
     expect(subject.limit).to eq(90)
   end
+  it 'has an `in_use` status of false' do
+    expect(subject.in_use).to be false
+  end
 
   describe '#top_up' do
     it 'should take a top-up value and add it to the card balance' do

@@ -1,11 +1,12 @@
 LIMIT = 90
 
 class Oystercard
-  attr_reader :balance, :limit
+  attr_reader :balance, :limit, :in_use
 
   def initialize
     @balance = 0
     @limit = LIMIT
+    @in_use = false
   end
   def top_up(value)
     projection = @balance + value
@@ -16,13 +17,11 @@ class Oystercard
   def deduct(value)
     @balance -= value
   end
-
   def in_journey?
-    return false
+    @in_use
   end
-
   def tap_in
-
+    @in_use = true
   end
 
 end
