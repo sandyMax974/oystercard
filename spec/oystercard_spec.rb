@@ -19,7 +19,7 @@ describe Oystercard do
     it 'should raise an error if top_up returns more than 90' do
       oyster = Oystercard.new
       oyster.top_up(Oystercard::LIMIT)
-      expect { subject.top_up(91) }.to raise_error("top up limit of #{Oystercard::LIMIT} exceeded")
+      expect { subject.top_up(1) }.to raise_error("top up limit of #{Oystercard::LIMIT} exceeded")
     end
   end
 
