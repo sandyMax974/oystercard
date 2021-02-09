@@ -9,7 +9,7 @@ class Oystercard
   end
   def top_up(value)
     projection = @balance + value
-    raise 'top up limit exceeded' if projection > @limit
+    raise "top up limit of #{LIMIT} exceeded" if projection > @limit
     @balance += value
   end
 end
