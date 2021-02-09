@@ -17,4 +17,12 @@ class Oystercard
     @balance -= value
   end
 
+  def in_journey?
+    return false
+  end
+
+  def tap_in
+
+  end
+
 end

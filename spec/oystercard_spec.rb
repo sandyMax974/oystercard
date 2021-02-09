@@ -24,4 +24,19 @@ describe Oystercard do
       expect(subject.balance).to eq (-10)
     end
   end
+  describe '#in_journey?' do
+    it 'should return false if the oystercard isnt in use' do
+      expect(subject.in_journey?).to eq false
+    end
+  #  it 'should return true if the oystercard is in use' do
+  #    expect(subject.in_journey?).to eq true
+  #  end
+  end
+
+  describe '#tap_in' do
+    it 'should change in_journey? to true' do
+      expect{subject.tap_in}.to change{subject.in_journey?}.to true
+    end
+  end
+
 end
