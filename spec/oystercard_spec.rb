@@ -1,6 +1,8 @@
 require 'oystercard'
 
 describe Oystercard do
+  let(:minimum_fare) { 1 }
+
   it 'has a balance of 0 by default' do
     expect(subject.balance).to eq(0)
   end
@@ -23,19 +25,17 @@ describe Oystercard do
     end
   end
 
-  describe '#deduct' do
-    it 'should deduct from the balance on the card' do
-      subject.deduct(10)
-      expect(subject.balance).to eq (-10)
-    end
-  end
+  # describe '#deduct' do
+  #   it 'should deduct from the balance on the card' do
+  #     subject.deduct(10)
+  #     # allow(subject).to receive(:deduct) { 10 }
+  #     expect(subject.balance).to eq (-10)
+  #   end
+  # end
   describe '#in_journey?' do
     it 'should return false if the oystercard isnt in use' do
       expect(subject.in_journey?).to eq false
     end
-  #  it 'should return true if the oystercard is in use' do
-  #    expect(subject.in_journey?).to eq true
-  #  end
   end
 
   describe '#tap_in' do
@@ -52,7 +52,12 @@ describe Oystercard do
     it 'should change in_journey? to false' do
       subject.top_up(20)
       subject.tap_in
-      expect { subject.tap_out }.to change { subject.in_journey? }.to false
+      expect { subject.tap_out(minimum_fare) }.to change { subject.in_journey? }.to false
+    end
+    it 'should deduct travel fare from card balance' do
+      subject.top_up(20)
+      subject.tap_in
+      expect { subject.tap_out(minimum_fare) }.to change { subject.balance }.to (subject.balance - minimum_fare)
     end
   end
 

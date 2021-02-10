@@ -5,7 +5,6 @@ class Oystercard
   LIMIT = 90
   MIN_BALANCE = 1
 
-
   def initialize
     @balance = 0
     @limit = LIMIT
@@ -15,10 +14,6 @@ class Oystercard
     projection = @balance + value
     fail "Top-up limit of £#{@limit} exceeded" if projection > @limit
     @balance += value
-  end
-
-  def deduct(value)
-    @balance -= value
   end
   #is it necessary to use both in_journey and in_use (they are both booleans showing the same thing)
   def in_journey?
@@ -30,8 +25,15 @@ class Oystercard
     @in_use = true
   end
 
-  def tap_out
+  def tap_out(fare)
     @in_use = false
+    deduct(fare)
+  end
+
+  private
+
+  def deduct(value)
+    @balance -= value
   end
 
 end
