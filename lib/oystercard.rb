@@ -1,32 +1,29 @@
 
 
 class Oystercard
-  attr_reader :balance, :limit, :in_use
-  LIMIT = 90
+  attr_reader :balance, :limit, :entry_station
+  MAX_BALANCE = 90
   MIN_BALANCE = 1
 
   def initialize
     @balance = 0
-    @limit = LIMIT
-    @in_use = false
+    @limit = MAX_BALANCE
   end
   def top_up(value)
-    projection = @balance + value
-    fail "Top-up limit of £#{@limit} exceeded" if projection > @limit
+    exceeded_balance_message(value)
     @balance += value
   end
-  #is it necessary to use both in_journey and in_use (they are both booleans showing the same thing)
   def in_journey?
-    @in_use
+    !!@entry_station
   end
 
-  def tap_in
-    fail "Mininum balance of £#{MIN_BALANCE} required to travel" if @balance < MIN_BALANCE
-    @in_use = true
+  def tap_in(station)
+    unecessary_fund_message
+    @entry_station = station
   end
 
   def tap_out(fare)
-    @in_use = false
+    @entry_station = nil
     deduct(fare)
   end
 
@@ -34,6 +31,12 @@ class Oystercard
 
   def deduct(value)
     @balance -= value
+  end
+  def exceeded_balance_message(value)
+    fail "Top-up limit of £#{@limit} exceeded" if (@balance + value) > @limit
+  end
+  def unecessary_fund_message
+    fail "Mininum balance of £#{MIN_BALANCE} required to travel" if @balance < MIN_BALANCE
   end
 
 end
