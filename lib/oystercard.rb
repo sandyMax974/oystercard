@@ -1,7 +1,7 @@
 
 
 class Oystercard
-  attr_reader :balance, :limit, :entry_station
+  attr_reader :balance, :limit, :entry_station, :exit_station
   MAX_BALANCE = 90
   MIN_BALANCE = 1
 
@@ -22,9 +22,10 @@ class Oystercard
     @entry_station = station
   end
 
-  def tap_out(fare)
+  def tap_out(fare, station)
     @entry_station = nil
     deduct(fare)
+    @exit_station = station
   end
 
   private

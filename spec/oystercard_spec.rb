@@ -3,6 +3,7 @@ require 'oystercard'
 describe Oystercard do
   let(:minimum_fare) { 1 }
   let(:entry_station) { double(:station) }
+  let(:exit_station) { double(:station) }
   let(:station) { double(:station)}
 
   it 'has a balance of 0 by default' do
@@ -55,18 +56,24 @@ describe Oystercard do
     it 'should change in_journey? to false' do
       subject.top_up(20)
       subject.tap_in(entry_station)
-      expect { subject.tap_out(minimum_fare) }.to change { subject.in_journey? }.to false
+      expect { subject.tap_out(minimum_fare, exit_station) }.to change { subject.in_journey? }.to false
     end
     it 'should set entry_station to be nil' do
       subject.top_up(20)
       subject.tap_in(entry_station)
-      subject.tap_out(minimum_fare)
+      subject.tap_out(minimum_fare, exit_station)
       expect(subject.entry_station).to eq nil
+    end
+    it 'should set exit station' do
+      subject.top_up(20)
+      subject.tap_in(entry_station)
+      subject.tap_out(minimum_fare, exit_station)
+      expect(subject.exit_station).to eq exit_station
     end
     it 'should deduct travel fare from card balance' do
       subject.top_up(20)
       subject.tap_in(entry_station)
-      expect { subject.tap_out(minimum_fare) }.to change { subject.balance }.to (subject.balance - minimum_fare)
+      expect { subject.tap_out(minimum_fare, exit_station) }.to change { subject.balance }.to (subject.balance - minimum_fare)
     end
   end
 
