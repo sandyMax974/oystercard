@@ -4,7 +4,6 @@ describe Oystercard do
   let(:minimum_fare) { 1 }
   let(:entry_station) { double(:station) }
   let(:exit_station) { double(:station) }
-  let(:station) { double(:station)}
   let(:journey) { {entry_station: entry_station, exit_station: exit_station} }
 
   it 'has a balance of 0 by default' do
@@ -34,53 +33,53 @@ describe Oystercard do
     end
   end
 
-  describe '#tap_in' do
+  describe '#touch_in' do
     it 'should take one argument' do
-      expect(subject).to respond_to(:tap_in).with(1)
+      expect(subject).to respond_to(:touch_in).with(1)
     end
     it 'should store an entry_station to the card' do
       subject.top_up(20)
-      subject.tap_in(entry_station)
+      subject.touch_in(entry_station)
       expect(subject.entry_station).to be(entry_station)
     end
     it 'should change in_journey? to true' do
       subject.top_up(20)
-      expect{subject.tap_in(entry_station)}.to change{subject.in_journey?}.to true
+      expect{subject.touch_in(entry_station)}.to change{subject.in_journey?}.to true
     end
     it 'should fail if balance is less than 1' do
       message = "Mininum balance of £#{Oystercard::MIN_BALANCE} required to travel"
-      expect { subject.tap_in(entry_station) }.to raise_error message
+      expect { subject.touch_in(entry_station) }.to raise_error message
     end
   end
 
-  describe '#tap_out' do
+  describe '#touch_out' do
     it 'should change in_journey? to false' do
       subject.top_up(20)
-      subject.tap_in(entry_station)
-      expect { subject.tap_out(exit_station, minimum_fare) }.to change { subject.in_journey? }.to false
+      subject.touch_in(entry_station)
+      expect { subject.touch_out(exit_station, minimum_fare) }.to change { subject.in_journey? }.to false
     end
     it 'should set entry_station to be nil' do
       subject.top_up(20)
-      subject.tap_in(entry_station)
-      subject.tap_out(exit_station, minimum_fare)
+      subject.touch_in(entry_station)
+      subject.touch_out(exit_station, minimum_fare)
       expect(subject.entry_station).to eq nil
     end
     it 'should set exit station' do
       subject.top_up(20)
-      subject.tap_in(entry_station)
-      subject.tap_out(exit_station, minimum_fare)
+      subject.touch_in(entry_station)
+      subject.touch_out(exit_station, minimum_fare)
       expect(subject.exit_station).to eq exit_station
     end
     it 'should store the entry and exit station in journeys' do
       subject.top_up(20)
-      subject.tap_in(entry_station)
-      subject.tap_out(exit_station, minimum_fare)
-      expect(subject.journeys).to include(journey)
+      subject.touch_in(entry_station)
+      subject.touch_out(exit_station, minimum_fare)
+      expect(subject.journeys_log).to include(journey)
     end
     it 'should deduct travel fare from card balance' do
       subject.top_up(20)
-      subject.tap_in(entry_station)
-      expect { subject.tap_out(exit_station, minimum_fare) }.to change { subject.balance }.to (subject.balance - minimum_fare)
+      subject.touch_in(entry_station)
+      expect { subject.touch_out(exit_station, minimum_fare) }.to change { subject.balance }.to (subject.balance - minimum_fare)
     end
   end
 
