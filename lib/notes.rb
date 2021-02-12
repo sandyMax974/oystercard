@@ -7,6 +7,8 @@ Journey
 Journey contains: entry station
         contains: nil as exit_station
 
+set up journey_detail as {}
+
 Journey
 
 method: complete?
@@ -17,5 +19,8 @@ Card
 
 tap out (exit_station) --> @new_trip = same journey with exit station
 
+Journey_log [{entry, exit}]
+
 Journey
 
+journey_detail {}
