@@ -1,3 +1,4 @@
+
 require 'journey'
 
 describe Journey do

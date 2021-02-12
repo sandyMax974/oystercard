@@ -3,6 +3,7 @@ require_relative 'journey'
 
 class Oystercard
   attr_reader :balance, :limit, :entry_station, :exit_station, :journeys_log
+
   MAX_BALANCE = 90
   MIN_BALANCE = 1
 
@@ -11,17 +12,12 @@ class Oystercard
     @limit = MAX_BALANCE
     @journeys_log = []
   end
+  
   def top_up(value)
     exceeded_balance_message(value)
     @balance += value
   end
 
-  # def in_journey? # to be moved - done
-  #   !!@entry_station
-  # end
-
-  def touch_in(entry_station)
-    unecessary_fund_message
     # @entry_station = entry_station # => to be moved - done
     #Journey.new(entry_station)
   end
@@ -31,16 +27,17 @@ class Oystercard
     @exit_station = exit_station
     @journeys_log << { entry_station: @entry_station, exit_station: @exit_station }
     @entry_station = nil
+  
   end
-
-  private
 
   def deduct(value)
     @balance -= value
   end
+  
   def exceeded_balance_message(value)
     fail "Top-up limit of £#{@limit} exceeded" if (@balance + value) > @limit
   end
+  
   def unecessary_fund_message
     fail "Mininum balance of £#{MIN_BALANCE} required to travel" if @balance < MIN_BALANCE
   end

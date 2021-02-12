@@ -38,7 +38,6 @@ describe Oystercard do
       expect(Journey).to respond_to(:new).with(1)
     end
 
-
     it 'should fail if balance is less than 1' do
       message = "Mininum balance of £#{Oystercard::MIN_BALANCE} required to travel"
       expect { subject.touch_in(entry_station) }.to raise_error message
@@ -69,6 +68,7 @@ describe Oystercard do
       subject.touch_out(exit_station, minimum_fare)
       expect(subject.journeys_log).to include(journey)
     end
+
     it 'should deduct travel fare from card balance' do
       subject.top_up(20)
       subject.touch_in(entry_station)
