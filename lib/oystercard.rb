@@ -18,8 +18,10 @@ class Oystercard
     @balance += value
   end
 
+  def touch_in(entry_station)
+    unecessary_fund_message
     # @entry_station = entry_station # => to be moved - done
-    #Journey.new(entry_station)
+    Journey.new(entry_station)
   end
 
   def touch_out(exit_station, fare = MIN_BALANCE)

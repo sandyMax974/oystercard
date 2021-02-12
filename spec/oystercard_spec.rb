@@ -32,11 +32,12 @@ describe Oystercard do
     end
 
     # should create a new instance of Journey with  one argument
-    it 'should create a new Journey with one argument' do
-      subject.top_up(20)
-      subject.touch_in(:entry_station)
-      expect(Journey).to respond_to(:new).with(1)
-    end
+    # it 'should create a new Journey with one argument' do
+    #   subject.top_up(20)
+    #   subject.touch_in(:entry_station)
+    #   expect(Journey).to respond_to(:new).with(1)
+    # end
+    #Does not actually test for anything - come back to this!
 
     it 'should fail if balance is less than 1' do
       message = "Mininum balance of £#{Oystercard::MIN_BALANCE} required to travel"
@@ -62,12 +63,12 @@ describe Oystercard do
       subject.touch_out(exit_station, minimum_fare)
       expect(subject.exit_station).to eq exit_station
     end
-    it 'should store the entry and exit station in journeys' do
-      subject.top_up(20)
-      subject.touch_in(entry_station)
-      subject.touch_out(exit_station, minimum_fare)
-      expect(subject.journeys_log).to include(journey)
-    end
+    # it 'should store the entry and exit station in journeys' do
+    #   subject.top_up(20)
+    #   subject.touch_in(entry_station)
+    #   subject.touch_out(exit_station, minimum_fare)
+    #   expect(subject.journeys_log).to include(journey)
+    # end
 
     it 'should deduct travel fare from card balance' do
       subject.top_up(20)
