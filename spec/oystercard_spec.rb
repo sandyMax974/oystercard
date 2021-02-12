@@ -26,26 +26,19 @@ describe Oystercard do
     end
   end
 
-
-  describe '#in_journey?' do
-    it 'should return false if the oystercard isnt in use' do
-      expect(subject.in_journey?).to eq false
-    end
-  end
-
   describe '#touch_in' do
     it 'should take one argument' do
       expect(subject).to respond_to(:touch_in).with(1)
     end
-    it 'should store an entry_station to the card' do
+
+    # should create a new instance of Journey with  one argument
+    it 'should create a new Journey with one argument' do
       subject.top_up(20)
-      subject.touch_in(entry_station)
-      expect(subject.entry_station).to be(entry_station)
+      subject.touch_in(:entry_station)
+      expect(Journey).to respond_to(:new).with(1)
     end
-    it 'should change in_journey? to true' do
-      subject.top_up(20)
-      expect{subject.touch_in(entry_station)}.to change{subject.in_journey?}.to true
-    end
+
+
     it 'should fail if balance is less than 1' do
       message = "Mininum balance of £#{Oystercard::MIN_BALANCE} required to travel"
       expect { subject.touch_in(entry_station) }.to raise_error message
@@ -53,11 +46,11 @@ describe Oystercard do
   end
 
   describe '#touch_out' do
-    it 'should change in_journey? to false' do
-      subject.top_up(20)
-      subject.touch_in(entry_station)
-      expect { subject.touch_out(exit_station, minimum_fare) }.to change { subject.in_journey? }.to false
-    end
+    # it 'should change in_journey? to false' do
+    #   subject.top_up(20)
+    #   subject.touch_in(entry_station)
+    #   expect { subject.touch_out(exit_station, minimum_fare) }.to change { subject.in_journey? }.to false
+    # end
     it 'should set entry_station to be nil' do
       subject.top_up(20)
       subject.touch_in(entry_station)

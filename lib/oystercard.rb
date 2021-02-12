@@ -1,4 +1,5 @@
 require_relative 'station'
+require_relative 'journey'
 
 class Oystercard
   attr_reader :balance, :limit, :entry_station, :exit_station, :journeys_log
@@ -14,13 +15,15 @@ class Oystercard
     exceeded_balance_message(value)
     @balance += value
   end
-  def in_journey?
-    !!@entry_station
-  end
+
+  # def in_journey? # to be moved - done
+  #   !!@entry_station
+  # end
 
   def touch_in(entry_station)
     unecessary_fund_message
-    @entry_station = entry_station
+    # @entry_station = entry_station # => to be moved - done
+    #Journey.new(entry_station)
   end
 
   def touch_out(exit_station, fare = MIN_BALANCE)
